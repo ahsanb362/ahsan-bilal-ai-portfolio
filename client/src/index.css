@@ -183,3 +183,38 @@ h1 em, h2 em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400
 .photo-overlay small { font-size: 10px; line-height: 1.25; }
 .journey-photo--graduation { width: 124px; height: 158px; right: 8px; bottom: 10px; z-index: 2; transform: rotate(-5deg); background: #b9c5bc; box-shadow: 8px 9px 0 rgba(28,37,35,.09); }.journey-photo--graduation img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: saturate(.86) contrast(.95); }
 .portrait-placeholder--photo { display: block; background: #aab2ae; }.portrait-placeholder--photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; filter: saturate(.86) contrast(.98); }.portrait-placeholder--photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(155deg, rgba(255,255,255,.14), transparent 36%, rgba(28,37,35,.12)); pointer-events: none; }
+
+/* Motion language: quiet, directional, and content-led */
+.motion-ready .reveal-on-scroll { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+.motion-ready .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.motion-ready .reveal-on-scroll.is-visible .section-kicker { animation: reveal-child .55s var(--ease-out) both; }
+.motion-ready .reveal-on-scroll.is-visible .section-heading-row .section-note { animation: reveal-child .55s .08s var(--ease-out) both; }
+.motion-ready .reveal-on-scroll.is-visible .about-content,
+.motion-ready .reveal-on-scroll.is-visible .work-feature,
+.motion-ready .reveal-on-scroll.is-visible .thinking-grid,
+.motion-ready .reveal-on-scroll.is-visible .journey-grid,
+.motion-ready .reveal-on-scroll.is-visible .now-content,
+.motion-ready .reveal-on-scroll.is-visible .skills-grid,
+.motion-ready .reveal-on-scroll.is-visible .testimonial-copy,
+.motion-ready .reveal-on-scroll.is-visible .contact-grid { animation: reveal-child .65s .12s var(--ease-out) both; }
+@keyframes reveal-child { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.hero-visual .portrait-card { animation: portrait-drift 7s ease-in-out infinite; }
+.hero-visual .hero-float-card--top { animation: float-note 5s .4s ease-in-out infinite; }
+.hero-visual .hero-float-card--bottom { animation: float-note 5.5s 1s ease-in-out infinite reverse; }
+@keyframes portrait-drift { 0%, 100% { transform: rotate(2.5deg) translateY(0); } 50% { transform: rotate(1deg) translateY(-7px); } }
+@keyframes float-note { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+.project-visual .visual-signal--one { animation: signal-pulse 5s ease-in-out infinite; }
+.project-visual .visual-signal--two { animation: signal-pulse 5s .8s ease-in-out infinite reverse; }
+@keyframes signal-pulse { 0%, 100% { transform: scale(1); opacity: .6; } 50% { transform: scale(1.06); opacity: .28; } }
+.photo-stack .journey-photo--main { transition: transform .35s var(--ease-out); }
+.photo-stack:hover .journey-photo--main { transform: rotate(-2deg) translateY(-6px); }
+.photo-stack .journey-photo--small { transition: transform .35s var(--ease-out); }
+.photo-stack:hover .journey-photo--small { transform: rotate(9deg) translate(4px, -4px); }
+.photo-stack .journey-photo--graduation { transition: transform .35s var(--ease-out); }
+.photo-stack:hover .journey-photo--graduation { transform: rotate(-2deg) translate(4px, -5px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .reveal-on-scroll, .motion-ready .reveal-on-scroll.is-visible { opacity: 1; transform: none; transition: none; }
+  .motion-ready .reveal-on-scroll.is-visible .section-kicker, .motion-ready .reveal-on-scroll.is-visible .section-heading-row .section-note, .motion-ready .reveal-on-scroll.is-visible .about-content, .motion-ready .reveal-on-scroll.is-visible .work-feature, .motion-ready .reveal-on-scroll.is-visible .thinking-grid, .motion-ready .reveal-on-scroll.is-visible .journey-grid, .motion-ready .reveal-on-scroll.is-visible .now-content, .motion-ready .reveal-on-scroll.is-visible .skills-grid, .motion-ready .reveal-on-scroll.is-visible .testimonial-copy, .motion-ready .reveal-on-scroll.is-visible .contact-grid { animation: none; }
+  .hero-visual .portrait-card, .hero-visual .hero-float-card--top, .hero-visual .hero-float-card--bottom, .project-visual .visual-signal--one, .project-visual .visual-signal--two { animation: none; }
+}

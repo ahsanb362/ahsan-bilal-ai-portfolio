@@ -164,6 +164,22 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.add("motion-ready");
+    const revealItems = document.querySelectorAll<HTMLElement>(".reveal-on-scroll");
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      }),
+      { threshold: 0.12, rootMargin: "0px 0px -42px 0px" },
+    );
+    revealItems.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
@@ -238,7 +254,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section about-section" id="about">
+      <section className="section about-section reveal-on-scroll" id="about">
         <div className="container about-grid">
           <div className="section-kicker"><span>About me</span><span>02 / 07</span></div>
           <div className="about-content">
@@ -256,7 +272,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section work-section" id="work">
+      <section className="section work-section reveal-on-scroll" id="work">
         <div className="container">
           <div className="section-heading-row">
             <div className="section-kicker"><span>Selected work</span><span>03 / 07</span></div>
@@ -292,7 +308,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="thinking-section" id="thinking">
+      <section className="thinking-section reveal-on-scroll" id="thinking">
         <div className="container thinking-grid">
           <div className="thinking-intro">
             <div className="section-kicker section-kicker--light"><span>Thinking in systems</span><span>04 / 07</span></div>
@@ -309,7 +325,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section journey-section" id="journey">
+      <section className="section journey-section reveal-on-scroll" id="journey">
         <div className="container journey-grid">
           <div>
             <div className="section-kicker"><span>The journey</span><span>05 / 07</span></div>
@@ -331,28 +347,28 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="now-section" id="writing">
+      <section className="now-section reveal-on-scroll" id="writing">
         <div className="container now-grid">
           <div className="section-kicker"><span>Now</span><span>06 / 07</span></div>
           <div className="now-content"><p className="now-label">A living shortlist</p><h2>What I&apos;m <em>thinking about</em> lately.</h2><div className="now-list">{["System design that makes AI legible", "LLM evaluation beyond a single score", "Enterprise AI architecture with a long memory", "Explainable AI for people who need to act", "Deeper AI/ML research, with both feet on the ground"].map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong><ChevronRight size={16} /></div>)}</div><a className="text-link text-link--dark" href="#contact">Have a question about one of these? <ArrowRight size={15} /></a></div>
         </div>
       </section>
 
-      <section className="section skills-section">
+      <section className="section skills-section reveal-on-scroll">
         <div className="container">
           <div className="section-heading-row"><div className="section-kicker"><span>Working vocabulary</span><span>Toolkit</span></div><p className="section-note">Tools are useful. The judgement about when to use them is the craft.</p></div>
           <div className="skills-grid">{skillGroups.map(({ label, icon: Icon, items }) => <div className="skill-card" key={label}><div className="skill-card-heading"><Icon size={20} /><span>{label}</span></div><div className="skill-pills">{items.map(item => <span key={item}>{item}</span>)}</div></div>)}</div>
         </div>
       </section>
 
-      <section className="section testimonial-section">
+      <section className="section testimonial-section reveal-on-scroll">
         <div className="container testimonial-grid">
           <div className="section-kicker"><span>In good company</span><span>Coming soon</span></div>
           <div className="testimonial-copy"><div className="quote-mark">“</div><h2>The best work leaves people with <em>more clarity</em> than they started with.</h2><div className="testimonial-placeholder"><Search size={16} /><span>Real testimonials will live here.<br /><small>Placeholder until the right words arrive.</small></span></div></div>
         </div>
       </section>
 
-      <section className="contact-section" id="contact">
+      <section className="contact-section reveal-on-scroll" id="contact">
         <div className="container contact-grid">
           <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:hello@ahsanbilalkhan.com"><Mail size={16} /> hello@ahsanbilalkhan.com</a><span><MapPin size={16} /> Islamabad, Pakistan <i>·</i> working globally</span></div></div>
           <form className="contact-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={22} /></div><h3>Message received.</h3><p>This is a polished front-end placeholder for now. Connect the form endpoint when you&apos;re ready to make it live.</p><button type="button" className="button button--light" onClick={() => setSubmitted(false)}>Send another <ArrowRight size={16} /></button></div> : <><label><span>Your name</span><input required name="name" placeholder="A curious human" /></label><label><span>Email</span><input required type="email" name="email" placeholder="you@company.com" /></label><label><span>What are you working on?</span><textarea required name="challenge" placeholder="A few lines about the problem, the ambition, or the mess..." rows={4} /></label><button type="submit" className="button button--lime">Send the brief <ArrowUpRight size={17} /></button><small className="form-note">No pitch deck required. Context beats polish.</small></>}</form>
