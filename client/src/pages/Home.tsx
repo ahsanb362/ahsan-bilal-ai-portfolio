@@ -197,7 +197,7 @@ export default function Home() {
             <a href={`#${id}`} key={id}>{label}</a>
           ))}
         </nav>
-        <a className="nav-availability" href="#contact"><span /> Available for select builds</a>
+        <a className="nav-availability" href="#contact"><span /> Open to global collaborations</a>
         <button className="mobile-menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -228,7 +228,7 @@ export default function Home() {
             <div className="hero-orbit hero-orbit--outer" />
             <div className="hero-orbit hero-orbit--inner" />
             <div className="portrait-card">
-              <div className="portrait-card-top"><span>01 / portrait</span><span>ISB · PK</span></div>
+              <div className="portrait-card-top"><span>01 / portrait</span><span>LHR · PK</span></div>
               <div className="portrait-placeholder portrait-placeholder--photo">
                 <img src="/manus-storage/ahsan-corporate-headshot_f123746c.png" alt="Ahsan Bilal Khan, Senior AI Engineer" />
                 <span className="portrait-note">Senior AI Engineer<br /><small>AI systems, thoughtfully built</small></span>
@@ -370,7 +370,7 @@ export default function Home() {
 
       <section className="contact-section reveal-on-scroll" id="contact">
         <div className="container contact-grid">
-          <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:hello@ahsanbilalkhan.com"><Mail size={16} /> hello@ahsanbilalkhan.com</a><span><MapPin size={16} /> Islamabad, Pakistan <i>·</i> working globally</span></div></div>
+          <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:hello@ahsanbilalkhan.com"><Mail size={16} /> hello@ahsanbilalkhan.com</a><span><MapPin size={16} /> Lahore, Pakistan <i>·</i> roots in Faisalabad <i>·</i> working globally</span></div></div>
           <form className="contact-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={22} /></div><h3>Message received.</h3><p>This is a polished front-end placeholder for now. Connect the form endpoint when you&apos;re ready to make it live.</p><button type="button" className="button button--light" onClick={() => setSubmitted(false)}>Send another <ArrowRight size={16} /></button></div> : <><label><span>Your name</span><input required name="name" placeholder="A curious human" /></label><label><span>Email</span><input required type="email" name="email" placeholder="you@company.com" /></label><label><span>What are you working on?</span><textarea required name="challenge" placeholder="A few lines about the problem, the ambition, or the mess..." rows={4} /></label><button type="submit" className="button button--lime">Send the brief <ArrowUpRight size={17} /></button><small className="form-note">No pitch deck required. Context beats polish.</small></>}</form>
         </div>
       </section>
