@@ -213,9 +213,9 @@ export default function Home() {
             <div className="hero-orbit hero-orbit--inner" />
             <div className="portrait-card">
               <div className="portrait-card-top"><span>01 / portrait</span><span>ISB · PK</span></div>
-              <div className="portrait-placeholder">
-                <div className="portrait-silhouette"><div className="silhouette-head" /><div className="silhouette-body" /></div>
-                <span className="portrait-note">Formal portrait slot<br /><small>Replace with Ahsan&apos;s photography</small></span>
+              <div className="portrait-placeholder portrait-placeholder--photo">
+                <img src="/manus-storage/ahsan-corporate-headshot_f123746c.png" alt="Ahsan Bilal Khan, Senior AI Engineer" />
+                <span className="portrait-note">Senior AI Engineer<br /><small>AI systems, thoughtfully built</small></span>
               </div>
               <div className="portrait-card-bottom"><span>Builder, researcher<br />and product thinker</span><ArrowUpRight size={18} /></div>
             </div>
@@ -316,9 +316,10 @@ export default function Home() {
             <h2>From foundations<br /><em>to frontier.</em></h2>
             <p className="journey-lead">The thread through the work has stayed consistent: get close to the problem, then build enough of the system to make a difference.</p>
             <div className="photo-stack">
-              <div className="journey-photo journey-photo--main"><div className="photo-placeholder"><span>Builder story</span><small>Startup competition pitch<br />photo slot</small></div></div>
-              <div className="journey-photo journey-photo--small"><div className="photo-placeholder"><span>Career journey</span><small>Graduation photo slot</small></div></div>
-              <span className="photo-caption">Personal archive / images to be added</span>
+              <div className="journey-photo journey-photo--main journey-photo--certificate"><img src="/manus-storage/ahsan-startup-pitch_df425231.jpeg" alt="Ahsan presenting his startup pitch to evaluators and teammates" /><div className="photo-overlay"><span>Builder story</span><small>Startup pitch / AGfow</small></div></div>
+              <div className="journey-photo journey-photo--small journey-photo--certificate"><img src="/manus-storage/ahsan-certificate-award_13983691.jpeg" alt="Ahsan receiving a certificate of appreciation from his university" /><div className="photo-overlay"><span>University distinction</span><small>Certificate of appreciation</small></div></div>
+              <div className="journey-photo journey-photo--graduation"><img src="/manus-storage/ahsan-graduation_81b43b75.jpeg" alt="Ahsan in his graduation ceremony attire" /><div className="photo-overlay"><span>Career journey</span><small>Graduation day</small></div></div>
+              <span className="photo-caption">Personal archive / milestones</span>
             </div>
           </div>
           <div className="timeline">
