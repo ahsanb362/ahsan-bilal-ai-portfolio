@@ -221,7 +221,9 @@ export default function Home() {
             <p className="hero-intro">The work sits somewhere between machine learning, product thinking, and the unglamorous details that make systems earn trust.</p>
             <div className="hero-actions">
               <a className="button button--dark" href="#work">Explore the work <ArrowDownRight size={16} /></a>
+              <a className="text-link" href="#contact">Let&apos;s talk <ArrowRight size={15} /></a>
               <a className="text-link" href="#about">A little more about me <ArrowRight size={15} /></a>
+              <a className="text-link" href="/manus-storage/ahsan-bilal-khan-cv_da1d2b33.pdf" target="_blank" rel="noreferrer">Download résumé <ExternalLink size={15} /></a>
             </div>
           </div>
           <div className="hero-visual reveal-up reveal-delay-2">
@@ -332,28 +334,39 @@ export default function Home() {
             <h2>From foundations<br /><em>to frontier.</em></h2>
             <p className="journey-lead">The thread through the work has stayed consistent: get close to the problem, then build enough of the system to make a difference.</p>
             <div className="photo-stack">
-              <div className="journey-photo journey-photo--main journey-photo--certificate"><img src="/manus-storage/ahsan-startup-pitch_df425231.jpeg" alt="Ahsan presenting his startup pitch to evaluators and teammates" /><div className="photo-overlay"><span>Builder story</span><small>Startup pitch / AGfow</small></div></div>
-              <div className="journey-photo journey-photo--small journey-photo--certificate"><img src="/manus-storage/ahsan-certificate-award_13983691.jpeg" alt="Ahsan receiving a certificate of appreciation from his university" /><div className="photo-overlay"><span>University distinction</span><small>Certificate of appreciation</small></div></div>
-              <div className="journey-photo journey-photo--graduation"><img src="/manus-storage/ahsan-graduation_81b43b75.jpeg" alt="Ahsan in his graduation ceremony attire" /><div className="photo-overlay"><span>Career journey</span><small>Graduation day</small></div></div>
+              <div className="journey-photo journey-photo--main journey-photo--certificate"><img loading="lazy" src="/manus-storage/ahsan-startup-pitch_df425231.jpeg" alt="Ahsan presenting his startup pitch to evaluators and teammates" /><div className="photo-overlay"><span>Builder story</span><small>Startup pitch / AGfow</small></div></div>
+              <div className="journey-photo journey-photo--small journey-photo--certificate"><img loading="lazy" src="/manus-storage/ahsan-certificate-award_13983691.jpeg" alt="Ahsan receiving a certificate of appreciation from his university" /><div className="photo-overlay"><span>University distinction</span><small>Certificate of appreciation</small></div></div>
+              <div className="journey-photo journey-photo--graduation"><img loading="lazy" src="/manus-storage/ahsan-graduation_81b43b75.jpeg" alt="Ahsan in his graduation ceremony attire" /><div className="photo-overlay"><span>Career journey</span><small>Graduation day</small></div></div>
               <span className="photo-caption">Personal archive / milestones</span>
             </div>
           </div>
-          <div className="timeline">
-            <div className="timeline-item timeline-item--active"><span className="timeline-year">Now</span><div><h3>Enterprise AI + systems</h3><p>Designing production-minded AI across retrieval, agents, evaluation, data, cloud, and software.</p></div></div>
-            <div className="timeline-item"><span className="timeline-year">Next</span><div><h3>Deeper research, clearer products</h3><p>Exploring explainability, system design, and the practical edge of AI/ML research.</p></div></div>
-            <div className="timeline-item"><span className="timeline-year">Before</span><div><h3>ML, CV, statistics, data</h3><p>Learning to respect the data-generating process, the model, and the world it has to work in.</p></div></div>
+          <div className="timeline-story-wrap">
+            <div className="timeline-story-heading"><span>Scroll through the chapters</span><ArrowRight size={15} /></div>
+            <div className="timeline-story" tabIndex={0} aria-label="Ahsan's career timeline">
+              <article className="story-card story-card--active"><span className="story-year">2026 → now</span><h3>Senior AI Engineer<br /><em>at Spark</em></h3><p>Building enterprise AI where architecture, evaluation, safety, deployment, and stakeholder intent have to hold together.</p><div className="story-tags"><i>Agentic systems</i><i>On-prem LLMs</i><i>Arabic / English</i></div></article>
+              <article className="story-card"><span className="story-year">2025 — 2026</span><h3>AI/ML Engineer<br /><em>at Cybergen</em></h3><p>Architecting AI/ML systems, production ETL, research manuscripts, internal workshops, and mentoring new engineers.</p><div className="story-tags"><i>Research</i><i>ETL</i><i>Mentoring</i></div></article>
+              <article className="story-card"><span className="story-year">2023 — 2025</span><h3>Enterprise software<br /><em>to AI/ML</em></h3><p>At Technupur, moving through Power Platform, SharePoint, data engineering, Azure, RAG, fine-tuning, MLOps, and enterprise workflows.</p><div className="story-tags"><i>Azure</i><i>RAG</i><i>Power BI</i></div></article>
+              <article className="story-card"><span className="story-year">2019 — 2023</span><h3>Computer Science<br /><em>at Faisalabad</em></h3><p>BS Computer Science at the University of Faisalabad, building projects, exploring computer vision, and turning a final-year project into a working product.</p><div className="story-tags"><i>BSCS</i><i>Computer vision</i><i>3.5 CGPA</i></div></article>
+              <article className="story-card"><span className="story-year">2020 →</span><h3>AI became<br /><em>the direction</em></h3><p>PIAIC gave the curiosity a structure: machine learning, applied AI, cloud-native development, and a commitment to keep learning by building.</p><div className="story-tags"><i>PIAIC</i><i>AI / ML</i><i>Foundations</i></div></article>
+            </div>
             <div className="journey-certificate"><div className="certificate-mark">A<span>+</span></div><div><small>University certificate / distinction</small><strong>Make the fundamentals<br />carry the ambition.</strong></div><ArrowUpRight size={18} /></div>
           </div>
         </div>
       </section>
 
-      <section className="now-section reveal-on-scroll" id="writing">
+      <section className="now-section reveal-on-scroll" id="now">
         <div className="container now-grid">
           <div className="section-kicker"><span>Now</span><span>06 / 07</span></div>
           <div className="now-content"><p className="now-label">A living shortlist</p><h2>What I&apos;m <em>thinking about</em> lately.</h2><div className="now-list">{["System design that makes AI legible", "LLM evaluation beyond a single score", "Enterprise AI architecture with a long memory", "Explainable AI for people who need to act", "Deeper AI/ML research, with both feet on the ground"].map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong><ChevronRight size={16} /></div>)}</div><a className="text-link text-link--dark" href="#contact">Have a question about one of these? <ArrowRight size={15} /></a></div>
         </div>
       </section>
 
+      <section className="section writing-section reveal-on-scroll" id="writing">
+        <div className="container writing-grid">
+          <div className="section-kicker"><span>Writing / learnings</span><span>From the notebook</span></div>
+          <div className="writing-content"><div className="writing-heading"><h2>I learn by <em>explaining.</em></h2><a className="text-link text-link--dark" href="https://medium.com/@khanbilal6172" target="_blank" rel="noreferrer">Read on Medium <ExternalLink size={14} /></a></div><p className="writing-intro">Technical notes on systems, AI engineering, architecture, and the decisions hiding underneath the implementation.</p><div className="writing-list"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7494779949804007424/" target="_blank" rel="noreferrer"><span>01 / LinkedIn</span><strong>Learning in public, one system at a time</strong><ArrowUpRight size={17} /></a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7498352414950039552/" target="_blank" rel="noreferrer"><span>02 / LinkedIn</span><strong>Notes from building and evaluating AI systems</strong><ArrowUpRight size={17} /></a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7479875626263445504/" target="_blank" rel="noreferrer"><span>03 / LinkedIn</span><strong>What the work taught me about engineering beyond the model</strong><ArrowUpRight size={17} /></a></div></div>
+        </div>
+      </section>
       <section className="section skills-section reveal-on-scroll">
         <div className="container">
           <div className="section-heading-row"><div className="section-kicker"><span>Working vocabulary</span><span>Toolkit</span></div><p className="section-note">Tools are useful. The judgement about when to use them is the craft.</p></div>
@@ -370,12 +383,12 @@ export default function Home() {
 
       <section className="contact-section reveal-on-scroll" id="contact">
         <div className="container contact-grid">
-          <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:hello@ahsanbilalkhan.com"><Mail size={16} /> hello@ahsanbilalkhan.com</a><span><MapPin size={16} /> Lahore, Pakistan <i>·</i> roots in Faisalabad <i>·</i> working globally</span></div></div>
+          <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:ahsanbilalaziz@gmail.com"><Mail size={16} /> ahsanbilalaziz@gmail.com</a><span><MapPin size={16} /> Lahore, Pakistan <i>·</i> roots in Faisalabad <i>·</i> working globally</span></div></div>
           <form className="contact-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={22} /></div><h3>Message received.</h3><p>This is a polished front-end placeholder for now. Connect the form endpoint when you&apos;re ready to make it live.</p><button type="button" className="button button--light" onClick={() => setSubmitted(false)}>Send another <ArrowRight size={16} /></button></div> : <><label><span>Your name</span><input required name="name" placeholder="A curious human" /></label><label><span>Email</span><input required type="email" name="email" placeholder="you@company.com" /></label><label><span>What are you working on?</span><textarea required name="challenge" placeholder="A few lines about the problem, the ambition, or the mess..." rows={4} /></label><button type="submit" className="button button--lime">Send the brief <ArrowUpRight size={17} /></button><small className="form-note">No pitch deck required. Context beats polish.</small></>}</form>
         </div>
       </section>
 
-      <footer className="site-footer"><div className="container footer-top"><a className="wordmark wordmark--footer" href="#top"><span className="wordmark-mark">ABK</span><span className="wordmark-name">Ahsan Bilal Khan</span></a><p>AI systems, thoughtfully built.</p><div className="footer-links"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact <ExternalLink size={13} /></a></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Ahsan Bilal Khan</span><span>Built with curiosity <Sparkles size={13} /></span><a href="#top">Back to top <ArrowUpRight size={13} /></a></div></footer>
+      <footer className="site-footer"><div className="container footer-top"><a className="wordmark wordmark--footer" href="#top"><span className="wordmark-mark">ABK</span><span className="wordmark-name">Ahsan Bilal Khan</span></a><p>AI systems, thoughtfully built.</p><div className="footer-links"><a href="https://www.linkedin.com/in/ahsan-bilal-khan-14235b212/" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a><a href="https://github.com/AhsanBilal157" target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href="https://medium.com/@khanbilal6172" target="_blank" rel="noreferrer">Medium <ExternalLink size={13} /></a><a href="mailto:ahsanbilalaziz@gmail.com">Email <ExternalLink size={13} /></a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact <ExternalLink size={13} /></a></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Ahsan Bilal Khan</span><span>Built with curiosity <Sparkles size={13} /></span><a href="#top">Back to top <ArrowUpRight size={13} /></a></div></footer>
 
       {selectedProject && <div className="modal-backdrop" role="presentation" onClick={() => setSelectedProject(null)}><div className="case-modal" role="dialog" aria-modal="true" aria-labelledby="case-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Close case study"><X size={19} /></button><p className="project-type">{selectedProject.number} / {selectedProject.type}</p><h2 id="case-title">{selectedProject.title}</h2><p className="modal-summary">{selectedProject.summary}</p><div className="case-grid"><div><small>Problem</small><p>{selectedProject.problem}</p></div><div><small>Thinking</small><p>{selectedProject.thinking}</p></div><div><small>Architecture</small><p>{selectedProject.architecture}</p></div><div><small>Outcome</small><p>{selectedProject.outcome}</p></div></div><div className="project-tags">{selectedProject.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></div>}
     </main>
