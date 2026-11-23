@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -31,6 +31,7 @@ type Project = {
   thinking: string;
   architecture: string;
   outcome: string;
+  ownership?: string;
 };
 
 const projects: Project[] = [
@@ -45,6 +46,7 @@ const projects: Project[] = [
     thinking: "Treat retrieval, evidence, and confidence as first-class product experiences — not invisible plumbing.",
     architecture: "Document ingestion → structure-aware chunking → hybrid retrieval → grounded generation → evaluation harness.",
     outcome: "A production-minded research surface designed around traceability and decision velocity.",
+    ownership: "Architecture, retrieval design, evaluation strategy, and product-facing implementation.",
   },
   {
     number: "02",
@@ -57,6 +59,7 @@ const projects: Project[] = [
     thinking: "Start with the domain's failure modes: ambiguity, outdated sources, and answers that sound right but are not.",
     architecture: "Intent routing → policy-aware retrieval → tool calls → citation layer → human escalation.",
     outcome: "A safer conversational workflow with a clear boundary between assistance and decision-making.",
+    ownership: "AI architecture, grounding and guardrail design, workflow integration, and evaluation thinking.",
   },
   {
     number: "03",
@@ -69,6 +72,7 @@ const projects: Project[] = [
     thinking: "Design for recruiter judgment — augment pattern recognition, never replace the human context layer.",
     architecture: "Profile extraction → skill ontology → semantic matching → recruiter workspace → feedback loop.",
     outcome: "A workflow that makes signal visible and lets teams spend more time on people.",
+    ownership: "System framing, semantic matching approach, recruiter workflow design, and product direction.",
   },
   {
     number: "04",
@@ -157,6 +161,10 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [timelineIndex, setTimelineIndex] = useState(0);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const modalCloseRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -180,9 +188,44 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!selectedProject) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.setTimeout(() => modalCloseRef.current?.focus(), 0);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setSelectedProject(null); return; }
+      if (event.key !== "Tab") return;
+      const dialog = document.querySelector<HTMLElement>(".case-modal");
+      if (!dialog) return;
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('button, a[href], input, textarea, [tabindex]:not([tabindex="-1"])'));
+      if (!focusable.length) return;
+      const first = focusable[0]; const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      previouslyFocusedRef.current?.focus();
+    };
+  }, [selectedProject]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const subject = `AI systems conversation from ${String(data.get("name") || "a visitor")}`;
+    const body = `Name: ${String(data.get("name") || "")}\nEmail: ${String(data.get("email") || "")}\n\n${String(data.get("challenge") || "")}`;
+    window.location.href = `mailto:ahsanbilalaziz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
+  };
+
+  const moveTimeline = (direction: number) => {
+    const next = Math.max(0, Math.min(4, timelineIndex + direction));
+    setTimelineIndex(next);
+    timelineRef.current?.children[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   };
 
   return (
@@ -245,6 +288,16 @@ export default function Home() {
           <span>Scroll to read the story</span>
           <div className="hero-foot-line"><span /></div>
           <span>01 — 07</span>
+        </div>
+      </section>
+
+      <section className="recruiter-snapshot reveal-on-scroll" aria-label="Recruiter snapshot">
+        <div className="container snapshot-grid">
+          <div className="section-kicker"><span>At a glance</span><span>Recruiter snapshot</span></div>
+          <div className="snapshot-content">
+            <div className="snapshot-lead"><p className="eyebrow">Senior AI Engineer · Lahore, Pakistan</p><h2>Building dependable AI systems for teams that need <em>more than a demo.</em></h2><p>Open to global collaborations across AI engineering, applied research, and product-minded systems work.</p></div>
+            <div className="snapshot-facts"><div><span>Focus</span><strong>AI systems, evaluation, RAG, agentic workflows</strong></div><div><span>Base</span><strong>Lahore · roots in Faisalabad · global availability</strong></div><div><span>Proof</span><strong>Enterprise delivery, technical writing, BS Computer Science</strong></div><div className="snapshot-actions"><a className="button button--dark" href="/manus-storage/ahsan-bilal-khan-cv_da1d2b33.pdf" target="_blank" rel="noreferrer">View résumé <ExternalLink size={15} /></a><a className="text-link text-link--dark" href="https://www.linkedin.com/in/ahsan-bilal-khan-14235b212/" target="_blank" rel="noreferrer">Connect on LinkedIn <ExternalLink size={15} /></a></div></div>
+          </div>
         </div>
       </section>
 
@@ -341,8 +394,8 @@ export default function Home() {
             </div>
           </div>
           <div className="timeline-story-wrap">
-            <div className="timeline-story-heading"><span>Scroll through the chapters</span><ArrowRight size={15} /></div>
-            <div className="timeline-story" tabIndex={0} aria-label="Ahsan's career timeline">
+            <div className="timeline-story-heading"><span>Scroll through the chapters</span><div className="timeline-controls"><button type="button" onClick={() => moveTimeline(-1)} aria-label="Previous timeline chapter" disabled={timelineIndex === 0}><ArrowRight size={15} className="timeline-arrow timeline-arrow--previous" /></button><span>{String(timelineIndex + 1).padStart(2, "0")} / 05</span><button type="button" onClick={() => moveTimeline(1)} aria-label="Next timeline chapter" disabled={timelineIndex === 4}><ArrowRight size={15} /></button></div></div>
+            <div className="timeline-story" ref={timelineRef} tabIndex={0} aria-label="Ahsan's career timeline">
               <article className="story-card story-card--active"><span className="story-year">2026 → now</span><h3>Senior AI Engineer<br /><em>at Spark</em></h3><p>Building enterprise AI where architecture, evaluation, safety, deployment, and stakeholder intent have to hold together.</p><div className="story-tags"><i>Agentic systems</i><i>On-prem LLMs</i><i>Arabic / English</i></div></article>
               <article className="story-card"><span className="story-year">2025 — 2026</span><h3>AI/ML Engineer<br /><em>at Cybergen</em></h3><p>Architecting AI/ML systems, production ETL, research manuscripts, internal workshops, and mentoring new engineers.</p><div className="story-tags"><i>Research</i><i>ETL</i><i>Mentoring</i></div></article>
               <article className="story-card"><span className="story-year">2023 — 2025</span><h3>Enterprise software<br /><em>to AI/ML</em></h3><p>At Technupur, moving through Power Platform, SharePoint, data engineering, Azure, RAG, fine-tuning, MLOps, and enterprise workflows.</p><div className="story-tags"><i>Azure</i><i>RAG</i><i>Power BI</i></div></article>
@@ -353,6 +406,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="proof-section reveal-on-scroll" aria-label="Education and achievements">
+        <div className="container proof-grid"><div className="section-kicker"><span>Proof points</span><span>Education + achievements</span></div><div className="proof-content"><h2>Foundations that keep the ambition <em>honest.</em></h2><div className="proof-cards"><article><span>01 / Education</span><h3>BS Computer Science</h3><p>University of Faisalabad · CGPA 3.5</p></article><article><span>02 / Recognition</span><h3>Merit scholarship</h3><p>60% merit scholarship during university studies.</p></article><article><span>03 / Continuous learning</span><h3>PIAIC diploma</h3><p>Structured learning in applied AI, machine learning, and cloud-native development.</p></article><article><span>04 / University</span><h3>Certificate of appreciation</h3><p>Recognised by the university for contribution and participation.</p></article></div></div></div>
+      </section>
+
+      <section className="research-section reveal-on-scroll" aria-label="Research direction"><div className="container research-grid"><div className="section-kicker section-kicker--light"><span>Open questions</span><span>Research direction</span></div><div><h2>Questions I&apos;m still <em>chasing.</em></h2><p className="research-intro">These are active directions, not claims of completed publications: the questions shaping what I build and learn next.</p><div className="research-list"><div><span>Exploring</span><strong>How can evaluation make enterprise AI systems easier to trust?</strong></div><div><span>Learning</span><strong>What makes agentic workflows reliable beyond a single successful demo?</strong></div><div><span>Researching</span><strong>How can explainability help people make better decisions with AI?</strong></div></div></div></div></section>
 
       <section className="now-section reveal-on-scroll" id="now">
         <div className="container now-grid">
@@ -394,13 +453,13 @@ export default function Home() {
       <section className="contact-section reveal-on-scroll" id="contact">
         <div className="container contact-grid">
           <div className="contact-copy"><div className="section-kicker section-kicker--light"><span>Let&apos;s talk</span><span>07 / 07</span></div><h2>Have a hard AI problem? <em>Let&apos;s talk.</em></h2><p>If the brief is fuzzy, the constraints are real, or the first idea needs a thoughtful sparring partner — send it over.</p><div className="contact-details"><a href="mailto:ahsanbilalaziz@gmail.com"><Mail size={16} /> ahsanbilalaziz@gmail.com</a><span><MapPin size={16} /> Lahore, Pakistan <i>·</i> roots in Faisalabad <i>·</i> working globally</span></div></div>
-          <form className="contact-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={22} /></div><h3>Message received.</h3><p>This is a polished front-end placeholder for now. Connect the form endpoint when you&apos;re ready to make it live.</p><button type="button" className="button button--light" onClick={() => setSubmitted(false)}>Send another <ArrowRight size={16} /></button></div> : <><label><span>Your name</span><input required name="name" placeholder="A curious human" /></label><label><span>Email</span><input required type="email" name="email" placeholder="you@company.com" /></label><label><span>What are you working on?</span><textarea required name="challenge" placeholder="A few lines about the problem, the ambition, or the mess..." rows={4} /></label><button type="submit" className="button button--lime">Send the brief <ArrowUpRight size={17} /></button><small className="form-note">No pitch deck required. Context beats polish.</small></>}</form>
+          <form className="contact-form" onSubmit={handleSubmit}>{submitted ? <div className="form-success"><div className="success-icon"><Check size={22} /></div><h3>Your email draft is ready.</h3><p>Your email app should have opened with the brief addressed to Ahsan. If it did not, use <a href="mailto:ahsanbilalaziz@gmail.com">ahsanbilalaziz@gmail.com</a> directly.</p><button type="button" className="button button--light" onClick={() => setSubmitted(false)}>Compose another <ArrowRight size={16} /></button></div> : <><label><span>Your name</span><input required name="name" placeholder="A curious human" /></label><label><span>Email</span><input required type="email" name="email" placeholder="you@company.com" /></label><label><span>What are you working on?</span><textarea required name="challenge" placeholder="A few lines about the problem, the ambition, or the mess..." rows={4} /></label><button type="submit" className="button button--lime">Send the brief <ArrowUpRight size={17} /></button><small className="form-note">This opens your email client; nothing is stored or sent by this site.</small></>}</form>
         </div>
       </section>
 
       <footer className="site-footer"><div className="container footer-top"><a className="wordmark wordmark--footer" href="#top"><span className="wordmark-mark">ABK</span><span className="wordmark-name">Ahsan Bilal Khan</span></a><p>AI systems, thoughtfully built.</p><div className="footer-links"><a href="https://www.linkedin.com/in/ahsan-bilal-khan-14235b212/" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a><a href="https://github.com/AhsanBilal157" target="_blank" rel="noreferrer">GitHub <ExternalLink size={13} /></a><a href="https://medium.com/@khanbilal6172" target="_blank" rel="noreferrer">Medium <ExternalLink size={13} /></a><a href="mailto:ahsanbilalaziz@gmail.com">Email <ExternalLink size={13} /></a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact <ExternalLink size={13} /></a></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Ahsan Bilal Khan</span><span>Built with curiosity <Sparkles size={13} /></span><a href="#top">Back to top <ArrowUpRight size={13} /></a></div></footer>
 
-      {selectedProject && <div className="modal-backdrop" role="presentation" onClick={() => setSelectedProject(null)}><div className="case-modal" role="dialog" aria-modal="true" aria-labelledby="case-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Close case study"><X size={19} /></button><p className="project-type">{selectedProject.number} / {selectedProject.type}</p><h2 id="case-title">{selectedProject.title}</h2><p className="modal-summary">{selectedProject.summary}</p><div className="case-grid"><div><small>Problem</small><p>{selectedProject.problem}</p></div><div><small>Thinking</small><p>{selectedProject.thinking}</p></div><div><small>Architecture</small><p>{selectedProject.architecture}</p></div><div><small>Outcome</small><p>{selectedProject.outcome}</p></div></div><div className="project-tags">{selectedProject.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></div>}
+      {selectedProject && <div className="modal-backdrop" role="presentation" onClick={() => setSelectedProject(null)}><div className="case-modal" role="dialog" aria-modal="true" aria-labelledby="case-title" aria-describedby="case-summary" onClick={(event) => event.stopPropagation()}><button ref={modalCloseRef} className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Close case study"><X size={19} /></button><p className="project-type">{selectedProject.number} / {selectedProject.type}</p><h2 id="case-title">{selectedProject.title}</h2><p className="modal-summary" id="case-summary">{selectedProject.summary}</p><div className="case-grid"><div><small>My ownership</small><p>{selectedProject.ownership}</p></div><div><small>Problem</small><p>{selectedProject.problem}</p></div><div><small>Thinking</small><p>{selectedProject.thinking}</p></div><div><small>Architecture</small><p>{selectedProject.architecture}</p></div><div><small>Outcome</small><p>{selectedProject.outcome}</p></div></div><div className="project-tags">{selectedProject.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></div>}
     </main>
   );
 }
